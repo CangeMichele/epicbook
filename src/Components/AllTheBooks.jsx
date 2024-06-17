@@ -1,23 +1,32 @@
-import React from "react";
-import { Row, Col,Card } from "react-bootstrap";
+//----- Componenti react
+import { React, useState } from "react";
+//----- Componenti react-bootstrap
+import { Row } from "react-bootstrap";
 
-function AllTheBooks(props) {
-  console.log(props.books);
+//----- Componenti app
+import SingleBook from "./SingleBook";
+import SearchForm from "./SearchForm";
+
+//----- AllTheBooks.jsx
+function AllTheBooks(categoryProps) {
+  const [search, setSearch] = useState("");
+  const handleSearch = (e) => setSearch(e.target.value); //metto la funzione nella variabile per passarla come parametro
   return (
-    <Row>
-      {props.books.map(
-        book => (
-        <Col>
-          <Card style={{ width: "18rem" }}>
-            <Card.Img variant="top" src={book.img} />
-            <Card.Body>
-              <Card.Title>{book.title}</Card.Title> 
-            </Card.Body>
-          </Card>
-        </Col>
-      )
-      )}
-    </Row>
+    <>
+      <SearchForm search={search} handleSearch={handleSearch} />
+
+      <Row>
+        {categoryProps.category
+          .filter(
+            (book) => book.title.toLowerCase().includes(search.toLowerCase()) //filtro pops.book e genero array di corrispondenti
+          )
+
+          .map((book) => (
+            <SingleBook key={book.asin} bookProp={book} /> //ciclo array e uso map per generare pagina
+            //il Map genera un warning. vuole una key univoca
+          ))}
+      </Row>
+    </>
   );
 }
 export default AllTheBooks;

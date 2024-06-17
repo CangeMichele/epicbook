@@ -1,8 +1,13 @@
+//----- Componenti react
 import React from "react";
-import Alert from "react-bootstrap/Alert";
 
+//----- Componenti react-bootstrap
+import {Alert} from "react-bootstrap";
+
+
+
+//----- Welcome.jsx -----
 function Welcome() {
-  // alert('Benvenuto su EpicBook !');
   return (
     <>
       <Alert variant="success" className="text-center">
