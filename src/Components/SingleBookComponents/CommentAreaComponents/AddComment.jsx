@@ -1,15 +1,23 @@
 //----- Componenti react
-import { React, useState } from "react";
+import { React, useState, useContext } from "react";
 //----- Componenti react-bootstrap
 import { Form, Button } from "react-bootstrap";
+
+//----- Context 
+import { Theme } from '../../../modules/Context';
+
 
 // dichiarazione delle costanti
 const url = `https://striveschool-api.herokuapp.com/api/comments/`;
 const token =
   "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJfaWQiOiI2NjQwYzlhZDE2N2U1MzAwMTVmYTY4NmIiLCJpYXQiOjE3MTg0MDM4NTAsImV4cCI6MTcxOTYxMzQ1MH0.beJtn7HCq6OvGp8wn37KZBI387diqE4Df8Yvtp8x7gQ";
 
+
 //----- AddComment.jsx
 function AddComment({ bookId, updateListComment, setUpdateListComment }) {
+
+  //variabile di stato Tema 
+  let [themeContext, setThemeContext] = useContext(Theme);
   
   
   //stato nuovo commento
@@ -89,7 +97,7 @@ function AddComment({ bookId, updateListComment, setUpdateListComment }) {
           </Form.Select>
         </Form.Group>
         <Form.Group className="mt-2">
-          <Button variant="info" onClick={postNewComment}>
+          <Button variant={themeContext === 'dark' ? 'secondary' : 'info' } onClick={postNewComment}>
             salva
           </Button>
         </Form.Group>

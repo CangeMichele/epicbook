@@ -1,10 +1,13 @@
 //----- Componenti react
-import { useState, React } from "react";
+import { useState,useContext, React } from "react";
 //----- Componenti react-bootstrap
 import { Button } from "react-bootstrap";
 
 //----- Componenti app
 import AllTheBooks from "./AllTheBooks";
+
+//----- Context
+import { Theme } from "../modules/Context";
 
 //----- Json
 import fantasy from "../books/fantasy.json";
@@ -14,31 +17,30 @@ import romance from "../books/romance.json";
 import scifi from "../books/scifi.json";
 
 //----- Categorys.jsx
-function Categorys() {
-  let [type, setType] = useState("fantasy");
+function Categorys({search}) {
+  const [type, setType] = useState("fantasy");
+
+  const categoryList = ["fantasy", "history", "horror", "romance", "scifi"];
+
+  const [themeContext, setThemeContext] = useContext(Theme);
+
   return (
     <>
-      <Button variant="dark" className="m-1" onClick={() => setType("fantasy")}>
-        Fantasy
-      </Button>
-      <Button variant="dark" className="m-1" onClick={() => setType("history")}>
-        History
-      </Button>
-      <Button variant="dark" className="m-1" onClick={() => setType("horror")}>
-        Horror
-      </Button>
-      <Button variant="dark" className="m-1" onClick={() => setType("romance")}>
-        Romance
-      </Button>
-      <Button variant="dark" className="m-1" onClick={() => setType("scifi")}>
-        Scifi
-      </Button>
+      {categoryList.map((categ) => (
+        <Button
+          variant={type === categ ? "secondary" : themeContext }
+          className="m-1"
+          onClick={() => setType(categ)}
+        >
+          {categ}
+        </Button>
+      ))}
 
-      {type === "fantasy" && <AllTheBooks category={fantasy} />}
-      {type === "history" && <AllTheBooks category={history} />}
-      {type === "horror" && <AllTheBooks category={horror} />}
-      {type === "romance" && <AllTheBooks category={romance} />}
-      {type === "scifi" && <AllTheBooks category={scifi} />}
+      {type === "fantasy" && <AllTheBooks category={fantasy} search={search} />}
+      {type === "history" && <AllTheBooks category={history} search={search}/>}
+      {type === "horror" && <AllTheBooks category={horror} search={search}/>}
+      {type === "romance" && <AllTheBooks category={romance} search={search} />}
+      {type === "scifi" && <AllTheBooks category={scifi} search={search}/>}
     </>
   );
 }

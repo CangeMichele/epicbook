@@ -1,10 +1,10 @@
-//----- CSS
-import './App.css';
 //----- CSS bootstrap
 import 'bootstrap/dist/css/bootstrap.min.css';
+//----- CSS
+import './App.css';
 
 //----- Componenti react
-import React from "react"
+import { useState, React } from "react";
 //----- Componenti react-bootstrap
 import { Container } from 'react-bootstrap';
 
@@ -14,22 +14,36 @@ import Welcome from './Components/Welcome';
 import Categorys from './Components/Categorys';
 import MyFooter from './Components/MyFooter';
 
+//----- Context 
+import { Theme } from './modules/Context';
+
+
 
 
 //----- App.js -----
 function App() {
+
+  const [search, setSearch] = useState("");
+  const handleSearch = (e) => setSearch(e.target.value); //metto la funzione nella variabile per passarla come parametro
+
+  const [theme, setTheme] = useState('dark');
+
   return (
     <>
-      <MyNavbar />
+      <Theme.Provider value={[theme, setTheme]}>
 
-      <Container className='myContainer'>
+        <MyNavbar search={search} handleSearch={handleSearch} />
 
-        <Welcome />
-        <Categorys />
+        <Container className='myContainer'>
 
-      </Container>
+          <Welcome />
+          <Categorys search={search} />
 
-      <MyFooter />
+        </Container>
+
+        <MyFooter />
+
+      </Theme.Provider>
     </>
   );
 }
