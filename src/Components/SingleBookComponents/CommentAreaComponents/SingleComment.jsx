@@ -1,16 +1,13 @@
 //----- Componenti react
 import { React, useContext } from "react";
 //----- Componenti react-bootstrap
-import { ListGroup, Button, ButtonGroup } from "react-bootstrap";
+import { ListGroup, Button } from "react-bootstrap";
 
 //----- Context
 import { Theme } from "../../..//modules/Context";
 
 // dichiarazione delle costanti
 const url = `https://striveschool-api.herokuapp.com/api/comments/`;
-const token =
-  "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJfaWQiOiI2NjQwYzlhZDE2N2U1MzAwMTVmYTY4NmIiLCJpYXQiOjE3MTg0MDM4NTAsImV4cCI6MTcxOTYxMzQ1MH0.beJtn7HCq6OvGp8wn37KZBI387diqE4Df8Yvtp8x7gQ";
-
 
 
 //---- SingleComment.jsx
@@ -18,21 +15,30 @@ function SingleComment({
   commentProp,
   updateListComment,
   setUpdateListComment,
+  token
 }) {
 
-  const [themeContext, setThemeContext] = useContext(Theme);
+  const [themeContext] = useContext(Theme);
 
-
-  
   //DELETE del commento
   const deleteComment = (commentId) => {
+    console.log('commentId: '+ commentId);
     fetch(url + commentId, {
       method: "DELETE",
       headers: { Authorization: `Bearer ${token}` },
     })
-      .then((response) => response.json())
-      .then(() => {
-        setUpdateListComment(!updateListComment); //modifico stato per aggiornare lista comment
+      .then((response) =>{
+       
+        if (response.ok) {
+          setUpdateListComment(!updateListComment); //modifico stato per aggiornare lista comment
+       
+        } else if (response.status === 401) {
+          throw new Error("Autorizzazione non valida"); 
+       
+        } else {
+          throw new Error("Errore durante l'eliminazione del commento");
+        }
+     
       })
       .catch((error) => console.log("eliminazione non riuscita: " + error));
   };
@@ -52,7 +58,6 @@ function SingleComment({
         </Button>
       </ListGroup.Item>
 
-      {/* {toPutComment && alert("vero")} */}
     </>
   );
 }

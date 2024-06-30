@@ -15,7 +15,6 @@ import { Theme } from "../modules/Context";
 //----- MyNavbar.jsx
 function MyNavbar({ search, handleSearch }) {
   const [themeContext, setThemeContext] = useContext(Theme);
-  console.log(Theme);
 
   return (
     <Navbar

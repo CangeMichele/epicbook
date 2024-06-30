@@ -12,12 +12,15 @@ function CommentsArea({ asin }) {
   const [loader, setLoader] = useState(false); // Stato del loader
   const [handleCommentsBook, setHandleCommentsBook] = useState([]); // Stato dei Commenti
   const [updateListComment, setUpdateListComment] = useState(false); // Stato aggiornamento elenco commenti
+
   const url = `https://striveschool-api.herokuapp.com/api`;
   const token =
-    "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJfaWQiOiI2NjQwYzlhZDE2N2U1MzAwMTVmYTY4NmIiLCJpYXQiOjE3MTg0MDM4NTAsImV4cCI6MTcxOTYxMzQ1MH0.beJtn7HCq6OvGp8wn37KZBI387diqE4Df8Yvtp8x7gQ";
-
+    "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJfaWQiOiI2NjQwYzlhZDE2N2U1MzAwMTVmYTY4NmIiLCJpYXQiOjE3MTk3NTczMzQsImV4cCI6MTcyMDk2NjkzNH0.D9zj_TmuUKWu_tkMuiKbooHNL26OBKMcmez7AvINsHE";
   useEffect(() => {
-    //mostro caricamento
+    if (!asin) {
+      return;
+    } //blocca la fetch se non è presente asin
+
     setLoader(true);
 
     //Get dei commenti del libro
@@ -34,23 +37,34 @@ function CommentsArea({ asin }) {
       .finally(() => {
         setLoader(false);
       });
-  }, [updateListComment]); // useEffect
+  }, [asin, updateListComment]); // useEffect
+
+  // console.log(handleCommentsBook);
 
   return (
     <>
-      {loader && <Loader />}
+      {!asin && <p>seleziona un libro</p>}
 
-      <AddComment
-        bookId={asin}
-        updateListComment={updateListComment}
-        setUpdateListComment={setUpdateListComment}
-      />
+      {asin && (
+        <>
+          {loader && <Loader />}
+          <p>{asin}</p>
 
-      <CommentList
-        commentsBook={handleCommentsBook}
-        updateListComment={updateListComment}
-        setUpdateListComment={setUpdateListComment}
-      />
+          <AddComment
+            bookId={asin}
+            updateListComment={updateListComment}
+            setUpdateListComment={setUpdateListComment}
+            token={token}
+          />
+
+          <CommentList
+            commentsBook={handleCommentsBook}
+            updateListComment={updateListComment}
+            setUpdateListComment={setUpdateListComment}
+            token={token}
+          />
+        </>
+      )}
     </>
   );
 }

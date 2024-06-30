@@ -1,27 +1,40 @@
 //----- Componenti react
-import { React } from "react";
+import { React, useState } from "react";
 //----- Componenti react-bootstrap
-import { Row } from "react-bootstrap";
+import { Row, Col } from "react-bootstrap";
 
 //----- Componenti app
 import SingleBook from "./SingleBook";
+import CommentsArea from "./SingleBookComponents/CommentArea";
 
 //----- AllTheBooks.jsx
 function AllTheBooks({ category, search }) {
-  return (
-    <>
-      <Row>
-        {category
-          .filter(
-            (book) => book.title.toLowerCase().includes(search.toLowerCase()) //filtro pops.book e genero array di corrispondenti
-          )
 
-          .map((book) => (
-            <SingleBook key={book.asin} bookProp={book} /> //ciclo array e uso map per generare pagina
-            //il Map genera un warning. vuole una key univoca
-          ))}
-      </Row>
-    </>
+  const [selected, setSelected] = useState(false);
+
+
+  return (
+    <Row>
+
+      <Col md={8}>
+        <Row>
+          {category
+            .filter(
+              (book) => book.title.toLowerCase().includes(search.toLowerCase()) //filtro pops.book e genero array di corrispondenti
+            )
+            .map((book) => (
+               //ciclo array e uso map per generare pagina
+              <SingleBook key={book.asin} bookProp={book} selected={selected} setSelected={setSelected}/> 
+            ))}
+        </Row>
+      </Col>
+
+      <Col md={4}>
+        <CommentsArea asin={selected} />
+        {/* <p>comment area {selected}</p> */}
+      </Col>
+
+    </Row>
   );
 }
 export default AllTheBooks;

@@ -4,32 +4,34 @@ import "../App.css";
 import { Card, Col } from "react-bootstrap";
 
 //----- Componenti react
-import { React, useState, useContext } from "react";
+import { React, useContext } from "react";
 
 //----- Context 
 
 import { Theme } from "../modules/Context";
 
-//----- Componenti app
-import CommentArea from "./SingleBookComponents/CommentArea";
-
 
 //----- SingleBook.jsx
-function SingleBook({ bookProp }) {
-  const [selected, setSelected] = useState(false);
-  const [themeContext, setThemeContext] = useContext(Theme);
+function SingleBook({ bookProp, selected, setSelected }) {
+
+  const [themeContext] = useContext(Theme);
 
   function borderSelected(selected, themeContext) {
-    if (selected) {
+    if (selected === bookProp.asin) {
+      
       if (themeContext === "light") {
-        return "8px solid red";
+        return "5px solid red";
       } else if (themeContext === "dark") {
-        return "8px solid grey";
+        return "5px solid grey";
       }
+
     } else {
+
       return "none";
+
     }
   }
+
 
   return (
     <Col>
@@ -38,11 +40,11 @@ function SingleBook({ bookProp }) {
           variant="top"
           src={bookProp.img}
           style={{ border: borderSelected(selected, themeContext) }}
-          onClick={() => setSelected(!selected)}
+          onClick={() => setSelected(selected === bookProp.asin ? false : bookProp.asin)}
         />
         <Card.Body>
           <Card.Title>{bookProp.title}</Card.Title>
-          {selected && <CommentArea asin={bookProp.asin} />}
+          {/* {selected && <CommentArea asin={bookProp.asin} />} */}
         </Card.Body>
       </Card>
     </Col>

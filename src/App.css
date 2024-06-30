@@ -10,11 +10,15 @@
 
 /*CSS CARD BOOK*/
 .card {
-    min-height: 500px;
-    width: 18rem;
+    height: 400px;
+    width: 12rem;
     margin: 10px;
 }
 
 .card-img {
     max-height: 400px;
+}
+
+.card-title {
+    font-size: medium;
 }

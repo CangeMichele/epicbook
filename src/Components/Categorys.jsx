@@ -22,7 +22,7 @@ function Categorys({search}) {
 
   const categoryList = ["fantasy", "history", "horror", "romance", "scifi"];
 
-  const [themeContext, setThemeContext] = useContext(Theme);
+  const themeContext = useContext(Theme);
 
   return (
     <>

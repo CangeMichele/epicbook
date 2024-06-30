@@ -9,15 +9,13 @@ import { Theme } from '../../../modules/Context';
 
 // dichiarazione delle costanti
 const url = `https://striveschool-api.herokuapp.com/api/comments/`;
-const token =
-  "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJfaWQiOiI2NjQwYzlhZDE2N2U1MzAwMTVmYTY4NmIiLCJpYXQiOjE3MTg0MDM4NTAsImV4cCI6MTcxOTYxMzQ1MH0.beJtn7HCq6OvGp8wn37KZBI387diqE4Df8Yvtp8x7gQ";
-
 
 //----- AddComment.jsx
-function AddComment({ bookId, updateListComment, setUpdateListComment }) {
+function AddComment({ bookId, updateListComment, setUpdateListComment, token }) {
+
 
   //variabile di stato Tema 
-  let [themeContext, setThemeContext] = useContext(Theme);
+  let themeContext = useContext(Theme);
   
   
   //stato nuovo commento
@@ -42,6 +40,8 @@ function AddComment({ bookId, updateListComment, setUpdateListComment }) {
       rate: e.target.value
     });
   };
+
+ 
 
   //POST del nuiovo commento  
   let postNewComment = () => {
