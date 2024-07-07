@@ -10,16 +10,17 @@ import { Theme } from "../modules/Context";
 
 
 //----- Welcome.jsx -----
-function Welcome() {
+function ErrorPage() {
   const [themeContext] = useContext(Theme);
 
   return (
     <>
-      <Alert variant={themeContext==='dark' ? 'secondary ' : 'primary '} className="text-center">
-        <h1>Benvenuto su EpicBook</h1>
+      <Alert variant={themeContext==='dark' ? 'dark ' : 'danger '} className="text-center">
+        <h1>Pagina non trovata</h1>
+        <h3>Errore 404</h3>
       </Alert>
     </>
   );
 }
 
-export default Welcome;
+export default ErrorPage;

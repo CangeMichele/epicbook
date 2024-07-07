@@ -5,7 +5,7 @@ import { Row, Col } from "react-bootstrap";
 
 //----- Componenti app
 import SingleBook from "./SingleBook";
-import CommentsArea from "./SingleBookComponents/CommentArea";
+// import CommentsArea from "./SingleBookComponents/CommentArea";
 
 //----- AllTheBooks.jsx
 function AllTheBooks({ category, search }) {
@@ -24,15 +24,14 @@ function AllTheBooks({ category, search }) {
             )
             .map((book) => (
                //ciclo array e uso map per generare pagina
-              <SingleBook key={book.asin} bookProp={book} selected={selected} setSelected={setSelected}/> 
+              <SingleBook key={book.asin} bookProp={book} selected={selected} setSelected={setSelected} /> 
             ))}
         </Row>
       </Col>
 
-      <Col md={4}>
+      {/* <Col md={4}>
         <CommentsArea asin={selected} />
-        {/* <p>comment area {selected}</p> */}
-      </Col>
+      </Col> */}
 
     </Row>
   );

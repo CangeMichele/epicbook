@@ -9,16 +9,13 @@
 }
 
 /*CSS CARD BOOK*/
-.card {
-    height: 400px;
+.my-card {
+    height: 420px;
     width: 12rem;
     margin: 10px;
 }
 
-.card-img {
-    max-height: 400px;
-}
 
-.card-title {
+.my-card-title {
     font-size: medium;
 }
